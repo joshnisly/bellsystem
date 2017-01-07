@@ -1,0 +1,16 @@
+BODY
+{
+    padding: 1em;
+}
+
+TEXTAREA[name=RawData]
+{
+    height: 30em;
+    width: 50em;
+}
+
+BUTTON[type=submit]
+{
+    margin-top: 1em;
+    float: right;
+}

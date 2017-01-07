@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FJS Bell System</title>
+    <link rel="stylesheet" href="{% swat_static 'invglobals.css' %}"/>
+    <link rel="stylesheet" href="{% static 'base.css' %}"/>
+</head>
+<body>
+    <h2>FJS Bell System</h2>
+    <h4>Raw definition editing</h4>
+    <form method="POST" action="" enctype="application/x-www-form-urlencoded">
+        <div style="display: inline-block">
+            <textarea name="RawData">{{bells.get_data_as_def()}}</textarea>
+            <br/>
+            <button type="submit" name="Action" value="SaveRaw" class="invBtn invBtnPrimary">Update Raw Definition</button>
+        </div>
+    </form>
+</body>
+</html>
