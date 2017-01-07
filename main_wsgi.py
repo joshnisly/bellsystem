@@ -9,6 +9,11 @@ BELLS_FILE = sys.argv[1]
 
 
 def index(request):
+    if request.method == 'POST':
+        if request.POST.get('Action') == 'SaveRaw':
+            raw_def = request.POST['RawData']
+            with open(BELLS_FILE, 'w') as output:
+                output.write(raw_def)
     bells_obj = _get_bells()
     return swat.template_response(request, 'index.html', {
         'bells': bells_obj
