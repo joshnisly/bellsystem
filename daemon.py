@@ -27,6 +27,9 @@ def run_forever():
 
     previously_active = []
 
+    for bell in range(0, len(BELLS_MAPPING)):
+        _enable(bell, False)
+
     while True:
         mod_time = os.stat(BELLS_FILE).st_mtime
         if not bells_def or mod_time != bells_mod_time:
