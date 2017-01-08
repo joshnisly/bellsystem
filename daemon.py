@@ -2,6 +2,7 @@
 
 import os
 import sys
+import time
 
 import RPi.GPIO as GPIO
 
@@ -35,6 +36,7 @@ def run_forever():
         if not bells_def or mod_time != bells_mod_time:
             bells_def = bells.Bells()
             bells_def.load_from_file(BELLS_FILE)
+            bells_mod_time = mod_time
 
         activations = bells_def.get_active_bells()
 
@@ -46,6 +48,8 @@ def run_forever():
             _enable(bell, True)
 
         previously_active = activations
+
+        time.sleep(0.1)
 
 
 def _enable(bell, enable):
