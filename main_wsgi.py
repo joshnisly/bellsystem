@@ -33,4 +33,4 @@ URLS = (
 application = swat.Application(URLS, send_500_emails=False)
 
 if __name__ == '__main__':
-    swat.run_standalone(application, '0.0.0.0:8080')
+    swat.run_standalone(application, '0.0.0.0:80')
