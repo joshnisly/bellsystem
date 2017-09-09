@@ -3,14 +3,35 @@ BODY
     padding: 1em;
 }
 
+FORM
+{
+    display: inline-block;
+}
+
 TEXTAREA[name=RawData]
 {
     height: 30em;
     width: 50em;
 }
 
-BUTTON[value=SaveRaw]
+BUTTON[value=SaveRaw],
+BUTTON[value=Save]
 {
     margin-top: 1em;
+    margin-bottom: 1em;
     float: right;
+}
+
+INPUT[type=number]
+{
+    width: 4em;
+    text-align: right;
+}
+TD
+{
+    padding: 0.25em;
+}
+INPUT[type=checkbox]
+{
+    padding: 0.25em;
 }

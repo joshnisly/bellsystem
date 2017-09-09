@@ -8,6 +8,70 @@
 </head>
 <body>
     <h2>FJS Bell System</h2>
+    <h3>Bells</h3>
+    <form method="POST" action="{{ url_for('update') }}" enctype="application/x-www-form-urlencoded">
+
+        <!-- Table of contents -->
+        <table>
+            <thead>
+                <tr>
+                    <td>Bell #</td>
+                    <td>Description</td>
+                </tr>
+            </thead>
+            <tbody>
+            {% for bell in bells.get_ordered_bells() %}
+            <tr>
+                <td>{{ bell['num'] }}</td>
+                <td>{{ bell['desc'] }}</td>
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Bell definitions -->
+        <button name="Action" value="Save" class="btn btn-primary">Update Bells</button>
+        {% for bell in bells.get_ordered_bells() %}
+        <h3>{{ bell['desc'] }}</h3>
+        <table>
+            <thead>
+                <td>Hour</td>
+                <td>Minute</td>
+                <td>Second</td>
+                <td>Duration</td>
+                <td>Su</td>
+                <td>M</td>
+                <td>Tu</td>
+                <td>W</td>
+                <td>Th</td>
+                <td>F</td>
+                <td>Sa</td>
+            </thead>
+            <tbody>
+                {% for activation in bells.get_data()['activations'] %}
+                    {% if activation['bell_num'] == bell['num'] %}
+                    <tr>
+                        <input type="hidden" name="bell_num" value="{{ bell['num'] }}"/>
+                        <td><input type="number" name="hour" value="{{ activation['hour'] }}"/></td>
+                        <td><input type="number" name="minute" value="{{ activation['minute'] }}"/></td>
+                        <td><input type="number" name="second" value="{{ activation['second'] }}"/></td>
+                        <td><input type="number" name="dur" value="{{ activation['dur'] }}"/></td>
+                        <td><input type="checkbox" name="dow_{{ loop.index }}_1" {% if 1 in activation['dows'] %} checked="checked" {% endif %}/></td>
+                        <td><input type="checkbox" name="dow_{{ loop.index }}_2" {% if 2 in activation['dows'] %} checked="checked" {% endif %}/></td>
+                        <td><input type="checkbox" name="dow_{{ loop.index }}_3" {% if 3 in activation['dows'] %} checked="checked" {% endif %}/></td>
+                        <td><input type="checkbox" name="dow_{{ loop.index }}_4" {% if 4 in activation['dows'] %} checked="checked" {% endif %}/></td>
+                        <td><input type="checkbox" name="dow_{{ loop.index }}_5" {% if 5 in activation['dows'] %} checked="checked" {% endif %}/></td>
+                        <td><input type="checkbox" name="dow_{{ loop.index }}_6" {% if 6 in activation['dows'] %} checked="checked" {% endif %}/></td>
+                        <td><input type="checkbox" name="dow_{{ loop.index }}_7" {% if 7 in activation['dows'] %} checked="checked" {% endif %}/></td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endfor %}
+        <button name="Action" value="Save" class="btn btn-primary">Update Bells</button>
+
+    </form>
     <h4>Raw definition editing</h4>
     <form method="POST" action="" enctype="application/x-www-form-urlencoded">
         <div style="display: inline-block">

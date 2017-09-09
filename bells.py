@@ -12,6 +12,10 @@ class Bells(object):
     def load_from_file(self, path):
         self._load_from_string(open(path).read())
 
+    def save_to_file(self, path):
+        with open(path, 'w') as output:
+            output.write(self.get_data_as_def())
+
     def load_from_string(self, s):
         self._load_from_string(s)
 
@@ -20,6 +24,15 @@ class Bells(object):
             'bells': self._bells,
             'activations': self._activations
         }
+
+    def get_ordered_bells(self):
+        return [{
+            'num': x,
+            'desc': self._bells[x]
+        } for x in sorted(self._bells)]
+
+    def set_activations(self, activations):
+        self._activations = activations
 
     def get_data_as_def(self):
         def format_activation(a):
