@@ -23,8 +23,11 @@ class Bells(object):
 
     def get_data_as_def(self):
         def format_activation(a):
+            dows = '|'.join(str(x) for x in sorted(a.get('dows', [])))
+            if not dows or dows == '2|3|4|5|6':
+                dows = ''
             return '%02i,%02i,%02i,%i,%i%s' % (a['hour'], a['minute'], a['second'], a['bell_num'], a['dur'],
-                                         (',' + '|'.join([str(d) for d in a['dows']])) if 'dows' in a else '')
+                                         (',' + dows if dows else ''))
 
         lines = []
         for bell_num in self._bells:
@@ -63,6 +66,8 @@ class Bells(object):
                                                   [int(x, 10) for x in parts[:5]]))
                         if len(parts) > 5:
                             activation_def['dows'] = [int(x, 10) for x in parts[5].split('|')]
+                        else:
+                            activation_def['dows'] = [2, 3, 4, 5, 6] # Default to weekdays
                         self._activations.append(activation_def)
             except Exception:
                 self._warnings.append('Unable to parse line: ' + line)
@@ -109,7 +114,8 @@ class BellsTest(unittest.TestCase):
             'minute': 15,
             'second': 0,
             'bell_num': 1,
-            'dur': 6
+            'dur': 6,
+            'dows': [2, 3, 4, 5, 6]
         })
 
     def testBadData(self):
@@ -136,6 +142,14 @@ a,30,10,1,5,2|3|4|5
 
         # DOW filter
         test(datetime.datetime(2017, 1, 1, 9, 30, 10), False)
+
+    def testDefaultDays(self):
+        self._bells.load_from_string('''
+09,30,10,1,5,1
+09,30,10,2,5
+''')
+        self.assertEquals(self._bells.get_active_bells(datetime.datetime(2017, 9, 3, 9, 30, 10)), [1])
+        self.assertEquals(self._bells.get_active_bells(datetime.datetime(2017, 9, 4, 9, 30, 10)), [2])
 
     def testGetDataAsDef(self):
         defs = ['''# Bell 1 My def here
