@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>FJS Bell System</title>
-    <link rel="stylesheet" href="{% swat_static 'invglobals.css' %}"/>
-    <link rel="stylesheet" href="{% static 'base.css' %}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}"/>
 </head>
 <body>
     <h2>FJS Bell System</h2>
@@ -13,7 +13,7 @@
         <div style="display: inline-block">
             <textarea name="RawData">{{bells.get_data_as_def()}}</textarea>
             <br/>
-            <button type="submit" name="Action" value="SaveRaw" class="invBtn invBtnPrimary">Update Raw Definition</button>
+            <button name="Action" value="SaveRaw" class="btn btn-primary">Update Raw Definition</button>
         </div>
     </form>
 </body>

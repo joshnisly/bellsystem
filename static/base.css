@@ -9,7 +9,7 @@ TEXTAREA[name=RawData]
     width: 50em;
 }
 
-BUTTON[type=submit]
+BUTTON[value=SaveRaw]
 {
     margin-top: 1em;
     float: right;

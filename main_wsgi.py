@@ -1,21 +1,24 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-import swat
+import flask
 import sys
 
 import bells
 
+app = flask.Flask(__name__)
+
 BELLS_FILE = sys.argv[1]
 
 
-def index(request):
-    if request.method == 'POST':
-        if request.POST.get('Action') == 'SaveRaw':
-            raw_def = request.POST['RawData']
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if flask.request.method == 'POST':
+        if flask.request.form.get('Action') == 'SaveRaw':
+            raw_def = flask.request.form['RawData']
             with open(BELLS_FILE, 'w') as output:
                 output.write(raw_def)
     bells_obj = _get_bells()
-    return swat.template_response(request, 'index.html', {
+    return flask.render_template('index.html', **{
         'bells': bells_obj
     })
 
@@ -26,11 +29,5 @@ def _get_bells():
     return bell_obj
 
 
-URLS = (
-    ('/', index),
-)
-
-application = swat.Application(URLS, send_500_emails=False)
-
 if __name__ == '__main__':
-    swat.run_standalone(application, '0.0.0.0:80')
+    app.run(debug=True)
