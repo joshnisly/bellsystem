@@ -5,6 +5,8 @@
     <title>FJS Bell System</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}"/>
+    <script src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
 </head>
 <body>
     <h2>FJS Bell System</h2>
@@ -33,7 +35,7 @@
         <button name="Action" value="Save" class="btn btn-primary">Update Bells</button>
         {% for bell in bells.get_ordered_bells() %}
         <h3>{{ bell['desc'] }}</h3>
-        <table>
+        <table class="ActivationsTable">
             <thead>
                 <td>Hour</td>
                 <td>Minute</td>
@@ -46,6 +48,7 @@
                 <td>Th</td>
                 <td>F</td>
                 <td>Sa</td>
+                <td>Notes</td>
             </thead>
             <tbody>
                 {% for activation in bells.get_data()['activations'] %}
@@ -63,6 +66,9 @@
                         <td><input type="checkbox" name="dow_{{ loop.index }}_5" {% if 5 in activation['dows'] %} checked="checked" {% endif %}/></td>
                         <td><input type="checkbox" name="dow_{{ loop.index }}_6" {% if 6 in activation['dows'] %} checked="checked" {% endif %}/></td>
                         <td><input type="checkbox" name="dow_{{ loop.index }}_7" {% if 7 in activation['dows'] %} checked="checked" {% endif %}/></td>
+                        <td><input type="text" name="notes" value="{{ activation['notes'] }}"/></td>
+                        <td><button type="button" class="Delete btn btn-danger btn-xs">Delete</button></td>
+                        <td><button type="button" class="Add btn btn-success btn-xs">Add</button></td>
                     </tr>
                     {% endif %}
                 {% endfor %}
