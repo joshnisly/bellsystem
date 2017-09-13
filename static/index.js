@@ -28,7 +28,6 @@ function addRow(event)
 {
     var row = $(event.target).closest('TR');
     var newRow = row.clone();
-    console.log(newRow.find('INPUT[type=checkbox]'));
     newRow.find('INPUT[type=number]').val('');
     newRow.find('INPUT[type=checkbox]').removeAttr('checked');
     row[0].parentNode.insertBefore(newRow[0], row[0].nextSibling);
